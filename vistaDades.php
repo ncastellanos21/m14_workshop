@@ -23,7 +23,7 @@
     <form action="workflow.php" method="post">
         <div class="mb-3 mt-3">
             <label for="identifier" class="form-label">Nombre identificador: </label>
-            <input type="text" class="form-control" id="identifier" placeholder="Introduzco el id" name="identidier">
+            <input type="text" class="form-control" id="identifier" placeholder="Introduzco el id" name="identifier">
         </div>
         <div class="mb-3 mt-3">
             <label for="description" class="form-label">Descripción: </label>
