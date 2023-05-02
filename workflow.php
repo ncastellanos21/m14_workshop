@@ -17,12 +17,13 @@
         if(isset($_POST["next"])){
             if (isset($_POST["identifier"]) && isset($_POST["description"]) && $_POST["next"] == '1') {
                 comprobador($_POST["identifier"], $_POST["description"]);
+            } else if (isset($_FILES["farmacs"]["name"]) && $_SESSION["estat"] == '2') {
+                move_uploaded_file($_FILES["farmacs"]["tmp_name"], "./files/".$_FILES["farmacs"]["name"]);
+                $_SESSION["rutaFarmacs"] = "./files/". $_FILES["farmacs"]["name"];
+            } else if (isset($_FILES["proteinas"]["name"]) && $_SESSION["estat"] == '3') {
+                move_uploaded_file($_FILES["proteinas"]["tmp_name"], "./files/".$_FILES["proteinas"]["name"]);
+                $_SESSION["rutaProteinas"] = "./files/". $_FILES["proteinas"]["name"];
             }
-
-            // if (isset($_FILES["farmacos"]["name"]) && $_SESSION["estat"] == '2') {
-            //     move_uploaded_file($_FILES["farmacos"]["tmp_name"], "./files/".$_FILES["farmacos"]["name"]);
-            //     $_SESSION["rutaFarmacos"] = "./files/". $_FILES["farmacos"]["name"];
-            // }
         } else {
             $_SESSION["estat"] = $_POST["back"];
         }
@@ -30,10 +31,7 @@
 
 
 
-    // if (isset($_FILES["proteinas"]["name"]) && $_SESSION["estat"] == '3') {
-    //     move_uploaded_file($_FILES["proteinas"]["tmp_name"], "./files/".$_FILES["proteinas"]["name"]);
-    //     $_SESSION["rutaProteinas"] = "./files/". $_FILES["proteinas"]["name"];
-    // }
+    if 
 
     // Cargar vista
 
@@ -59,7 +57,7 @@
             include_once("vistaParametres.php");
             break;
         case '4':
-            include_once("destroy.php");
+            include_once("vistaCrearCarpetas.php");
             break;
     }
 ?>
