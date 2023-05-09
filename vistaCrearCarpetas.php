@@ -24,11 +24,16 @@ if(isset($_SESSION['description']) && $_SESSION['description']!="" )$description
 <?php
 echo "<h1>Aquí la creación de la carpeta</h1>";
 $nombre = "simulacions\docking". hash('sha256', $identifier);
+
 echo $nombre;
 if(!mkdir($nombre)){
     die("Error al crear la carpeta");
 } else {
     echo ("carpeta ". $nombre . " creada");
+    mkdir($nombre."/farmacos");
+    mkdir($nombre."/proteinas");
+    copy($_SESSION["rutaFarmacs"], $nombre."//farmacos/". hash('sha256', $identifier));
+    copy($_SESSION["rutaProteinas"], $nombre."//proteinas/". hash('sha256', $identifier));
 }
 ?>
     <div class="progress">

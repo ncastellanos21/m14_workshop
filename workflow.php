@@ -18,22 +18,30 @@ if (!isset($_SESSION["estat"])) {
     if (isset($_POST["next"])) {
         if (isset($_POST["identifier"]) && isset($_POST["description"]) && $_POST["next"] == '1') {
             comprobador_dades($_POST["identifier"], $_POST["description"]);
+        }
 
-        } else if (isset($_FILES["farmacs"]["name"]) && $_SESSION["estat"] == '2') {
-            move_uploaded_file($_FILES["farmacs"]["tmp_name"], "./files/" . $_FILES["farmacs"]["name"]);
-            $_SESSION["rutaFarmacs"] = "./files/" . $_FILES["farmacs"]["name"];
+        if (isset($_FILES["farmacos"]) && $_POST["next"]== '2') {
+            $_SESSION["rutaFarmacs"] = "./files/" . $_FILES["farmacos"]["name"];
+            if ( move_uploaded_file($_FILES["farmacos"]["tmp_name"], "./files/" . $_FILES["farmacos"]["name"])) {
+                $_SESSION["estat"] = '2';
+            } else {
+                echo "Algo ha fallado al subir el archivo.";
+            }
+        }
 
-        } else if (isset($_FILES["proteinas"]["name"]) && $_SESSION["estat"] == '3') {
-            move_uploaded_file($_FILES["proteinas"]["tmp_name"], "./files/" . $_FILES["proteinas"]["name"]);
+        if (isset($_FILES["proteinas"]) && $_POST["next"] == '3') {
             $_SESSION["rutaProteinas"] = "./files/" . $_FILES["proteinas"]["name"];
+            if (move_uploaded_file($_FILES["proteinas"]["tmp_name"], "./files/" . $_FILES["proteinas"]["name"])) {
+                $_SESSION["estat"] = '3';
+            } else {
+                echo "Algo ha fallado al subir el archivo.";
+            }
 
-        } else if (isset($_FILES["farmacos"]["name"]) && $_SESSION["estat"] == '4') {
-            move_uploaded_file($_FILES["farmacos"]["tmp_name"], "./files/" . $_FILES["farmacos"]["name"]);
-            $_SESSION["rutaFarmacos"] = "./files/" . $_FILES["farmacos"]["name"];
-
-        } else if (isset($_POST["centerX"]) && isset($_POST["centerY"]) && isset($_POST["centerZ"]) && isset($_POST["sizeX"]) && isset($_POST["sizeY"]) && isset($_POST["sizeZ"]) && isset($_POST["energia"]) && isset($_POST["exhaustividad"]) && isset($_POST["modos"]) && $_POST["next"] == '5') {
+        }
+        
+        if (isset($_POST["centerX"]) && isset($_POST["centerY"]) && isset($_POST["centerZ"]) && isset($_POST["sizeX"]) && isset($_POST["sizeY"]) && isset($_POST["sizeZ"]) && isset($_POST["energia"]) && isset($_POST["exhaustividad"]) && isset($_POST["modos"]) && $_POST["next"] == '4') {
             if (!empty($_POST["centerX"]) && !empty($_POST["centerY"]) && !empty($_POST["centerZ"]) && !empty($_POST["sizeX"]) && !empty($_POST["sizeY"]) && !empty($_POST["sizeZ"]) && !empty($_POST["energia"]) && !empty($_POST["exhaustividad"]) && !empty($_POST["modos"])) {
-                $_SESSION["estat"] = '5';
+                $_SESSION["estat"] = '4';
                 $_SESSION["centerX"] =  $_POST["centerX"];
                 $_SESSION["centerY"] = $_POST["centerY"];
                 $_SESSION["centerZ"] = $_POST["centerZ"];
@@ -45,6 +53,7 @@ if (!isset($_SESSION["estat"])) {
                 $_SESSION["modos"] = $_POST["modos"];
             }
         }
+
     } else {
         $_SESSION["estat"] = $_POST["back"];
     }
@@ -67,5 +76,7 @@ switch ($_SESSION["estat"]) {
     case '4':
         include_once("vistaCrearCarpetas.php");
         break;
+    case '5':
+        include_once("destroy.php");
 }
 ?>

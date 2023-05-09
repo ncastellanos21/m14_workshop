@@ -18,7 +18,7 @@
 <form action="workflow.php" method="post" enctype="multipart/form-data">
   <div class="mb-3">
     <label for="proteinas" class="form-label">Proteinas (mol2, smi o tar.gz): </label>
-    <input type="file" class="form-control" id="farmacos" placeholder="Enter password" name="farmacos">
+    <input type="file" class="form-control" id="proteinas" placeholder="Enter password" name="proteinas">
   </div>
   <button type="submit" name="back" value="1" class="btn btn-primary">Back</button>
   <button type="submit" name="next" value="3" class="btn btn-primary">Next</button>
