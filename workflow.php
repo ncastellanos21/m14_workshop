@@ -20,23 +20,39 @@ if (!isset($_SESSION["estat"])) {
             comprobador_dades($_POST["identifier"], $_POST["description"]);
         }
 
-        if (isset($_FILES["farmacos"]) && $_POST["next"]== '2') {
-            $_SESSION["rutaFarmacs"] = "./files/" . $_FILES["farmacos"]["name"];
-            if ( move_uploaded_file($_FILES["farmacos"]["tmp_name"], "./files/" . $_FILES["farmacos"]["name"])) {
-                $_SESSION["estat"] = '2';
+        if (isset($_FILES["farmacos"]) && $_POST["next"] == '2') {
+            $farmac_extenType = array('mol2', 'smi', 'tar.gz');
+            $farmac_fileExtension = strtolower(pathinfo($_FILES["farmacos"]["name"], PATHINFO_EXTENSION));
+            $_SESSION["nombre_fichero_farmaco"] = $_FILES["farmacos"]["name"];
+            if (in_array($farmac_fileExtension, $farmac_extenType)) {
+                $_SESSION["rutaFarmacs"] = "./files/" . $_FILES["farmacos"]["name"];
+                
+                if (move_uploaded_file($_FILES["farmacos"]["tmp_name"], "./files/" . $_FILES["farmacos"]["name"])) {
+                    $_SESSION["estat"] = '2';
+                } else {
+                    echo "Algo ha fallado al subir el archivo.";
+                }
             } else {
-                echo "Algo ha fallado al subir el archivo.";
+                echo "La extensión del archivo no es válida. Se permiten solo archivos con las extensiones: mol2, smi, tar.gz.";
             }
         }
+        
 
         if (isset($_FILES["proteinas"]) && $_POST["next"] == '3') {
-            $_SESSION["rutaProteinas"] = "./files/" . $_FILES["proteinas"]["name"];
-            if (move_uploaded_file($_FILES["proteinas"]["tmp_name"], "./files/" . $_FILES["proteinas"]["name"])) {
-                $_SESSION["estat"] = '3';
+            $prot_extenType = array('pdbqt', 'pdb');
+            $prot_fileExtension = strtolower(pathinfo($_FILES["proteinas"]["name"], PATHINFO_EXTENSION));
+            $_SESSION["nombre_fichero_proteina"] = $_FILES["proteinas"]["name"];
+            if (in_array($prot_fileExtension, $prot_extenType)) {
+                $_SESSION["rutaProteinas"] = "./files/" . $_FILES["proteinas"]["name"];
+        
+                if (move_uploaded_file($_FILES["proteinas"]["tmp_name"], "./files/" . $_FILES["proteinas"]["name"])) {
+                    $_SESSION["estat"] = '3';
+                } else {
+                    echo "Algo ha fallado al subir el archivo.";
+                }
             } else {
-                echo "Algo ha fallado al subir el archivo.";
+                echo "La extensión del archivo no es válida. Se permiten solo archivos con las extensiones: pdb y pdbqt.";
             }
-
         }
         
         if (isset($_POST["centerX"]) && isset($_POST["centerY"]) && isset($_POST["centerZ"]) && isset($_POST["sizeX"]) && isset($_POST["sizeY"]) && isset($_POST["sizeZ"]) && isset($_POST["energia"]) && isset($_POST["exhaustividad"]) && isset($_POST["modos"]) && $_POST["next"] == '4') {
@@ -54,10 +70,14 @@ if (!isset($_SESSION["estat"])) {
             }
         }
 
+    } else if (isset($_POST["done"])) {
+        $_SESSION["estat"] = '5';
     } else {
         $_SESSION["estat"] = $_POST["back"];
     }
 }
+
+// print_r($_SESSION);
 
 
 switch ($_SESSION["estat"]) {
@@ -79,4 +99,3 @@ switch ($_SESSION["estat"]) {
     case '5':
         include_once("destroy.php");
 }
-?>

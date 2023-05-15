@@ -32,8 +32,8 @@ if(!mkdir($nombre)){
     echo ("carpeta ". $nombre . " creada");
     mkdir($nombre."/farmacos");
     mkdir($nombre."/proteinas");
-    copy($_SESSION["rutaFarmacs"], $nombre."//farmacos/". hash('sha256', $identifier));
-    copy($_SESSION["rutaProteinas"], $nombre."//proteinas/". hash('sha256', $identifier));
+    copy($_SESSION["rutaFarmacs"], $nombre."//farmacos/". $_SESSION["nombre_fichero_farmaco"]);
+    copy($_SESSION["rutaProteinas"], $nombre."//proteinas/". $_SESSION["nombre_fichero_proteina"]);
 }
 ?>
     <div class="progress">
@@ -41,7 +41,7 @@ if(!mkdir($nombre)){
     </div>
 
     <form action="workflow.php" method="post">
-            <button type="submit" name="next" class="btn btn-primary">Done</button>
+        <button type="submit" name="done" class="btn btn-primary">Done</button>
     </form>
 
 </body>
