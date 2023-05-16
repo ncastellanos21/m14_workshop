@@ -14,11 +14,11 @@
     <div class="container-fluid p-5 bg-primary text-white text-center">
         <h1>Información inicial</h1>
         <p>Vamos a preparar un Docking</p>
-    </div>
+    </div><br><br>
 
     <div class="progress">
-        <div class="progress-bar"></div>
-    </div>
+        <div class="progress-bar" style="width: 0%"></div>
+    </div><br>
 
     <form action="workflow.php" method="post">
         <div class="mb-3 mt-3">

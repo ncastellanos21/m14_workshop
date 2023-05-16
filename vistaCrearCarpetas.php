@@ -24,7 +24,7 @@ if(isset($_SESSION['description']) && $_SESSION['description']!="" )$description
 <?php
 echo "<h1>Aquí la creación de la carpeta</h1>";
 $nombre = "simulacions\docking". hash('sha256', $identifier);
-
+    
 echo $nombre;
 if(!mkdir($nombre)){
     die("Error al crear la carpeta");
@@ -32,12 +32,13 @@ if(!mkdir($nombre)){
     echo ("carpeta ". $nombre . " creada");
     mkdir($nombre."/farmacos");
     mkdir($nombre."/proteinas");
+    mkdir($nombre."/resultat");
     copy($_SESSION["rutaFarmacs"], $nombre."//farmacos/". $_SESSION["nombre_fichero_farmaco"]);
     copy($_SESSION["rutaProteinas"], $nombre."//proteinas/". $_SESSION["nombre_fichero_proteina"]);
 }
 ?>
     <div class="progress">
-        <div class="progress-bar"></div>
+        <div class="progress-bar" style="width:100%"></div>
     </div>
 
     <form action="workflow.php" method="post">
